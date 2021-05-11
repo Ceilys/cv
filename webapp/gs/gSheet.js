@@ -8,12 +8,14 @@ sap.ui.define([
             return sPath.match(/\d+/)[0];
         },
 
-        updateModel: function (oView) {
+        updateModel: function (oModel, oView) {
             var sSheetsUrl = "1BaRM37lx5vx-TC9xvF20MWCoCdLkKgj9uU36WoAzdsk";
 
             this.parseSheets(sSheetsUrl, function (data) {
-                var oModel = new sap.ui.model.json.JSONModel();
+                //var oModel = new sap.ui.model.json.JSONModel();
+                //var oModel = oView.getModel("cvMod");
                 oModel.setData(data);
+                //that.setModel(oModel, "cvMod");
                 //oView.setModel(oModel);
                 //sap.ui.getCore().byId("Shell").setBusy(false);
                 //sap.ui.getCore().getEventBus().publish("ninja.openui5.cart", "modelRefreshed", {});
@@ -51,7 +53,12 @@ sap.ui.define([
                 // extract the entries from the feed
                 while (aEntriesFeed.length > 0) {
                     for (var i = 0; i < iNumOfCol; i++) {
-                        var mEntryFeed = aEntriesFeed.shift().gs$cell;
+                        try {
+                            var mEntryFeed = aEntriesFeed.shift().gs$cell;
+                        }
+                        catch(err){
+                            break;
+                        }
                         mEntry[aHeaders[i]] = mEntryFeed.$t;
                     }
                     aEntries.push(mEntry);

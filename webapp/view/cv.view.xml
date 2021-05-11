@@ -75,7 +75,7 @@
 
 					<m:HBox class="sapUiTinyMarginBottom">
 						<core:Icon src="sap-icon://account"/>
-						<m:Link text=" John Miller" class="sapUiSmallMarginBegin"/>
+						<m:Link text="Test **{cv>/Consultant/0/Info}** John Miller" class="sapUiSmallMarginBegin"/>
 					</m:HBox>
 
 					<m:HBox class="sapUiTinyMarginBottom">

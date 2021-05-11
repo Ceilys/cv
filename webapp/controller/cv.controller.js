@@ -10,8 +10,11 @@ sap.ui.define([
 		return Controller.extend("com.cv.cv.controller.CV", {
 			onInit: function () {
 
-				
+			// get model
+			var oCvModel = this.getOwnerComponent().getModel("cvMod");
 
+			// set information in the view
+			this.getView().setModel(oCvModel, "cv");
 			}
 		});
 	});

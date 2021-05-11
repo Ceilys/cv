@@ -33,6 +33,7 @@ sap.ui.define([
 
 			//oView.setModel(oI18nModel, "i18n");
 			gs.updateModel(oModel); // CHRIS end
+			this.setModel(oModel, "cvMod");
 		}
 	});
 });
