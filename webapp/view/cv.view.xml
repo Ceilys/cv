@@ -8,7 +8,8 @@
 
 	<ObjectPageLayout id="ObjectPageLayout"
 		showTitleInHeaderContent="true"
-		upperCaseAnchorBar="false">
+		upperCaseAnchorBar="false"
+		busy="{cv>/busy}">
 		<headerTitle>
 			<ObjectPageDynamicHeaderTitle>
 				<expandedHeading>
@@ -36,18 +37,12 @@
 					<m:Title text="Header Title On Phone"/>
 				</snappedTitleOnMobile>
 
-				<actions>
-					<ObjectPageHeaderActionButton text="Edit" type="Emphasized" hideText="false"/>
-					<ObjectPageHeaderActionButton type="Transparent" text="Delete" hideText="false" hideIcon="true"/>
-					<ObjectPageHeaderActionButton type="Transparent" text="Copy" hideText="false" hideIcon="true"/>
-					<ObjectPageHeaderActionButton icon="sap-icon://action" type="Transparent" text="Share" tooltip="action"/>
-				</actions>
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>
 
 		<headerContent>
 			<m:FlexBox wrap="Wrap" fitContainer="true">
-				<m:Avatar src="./test-resources/sap/uxap/images/imageID_275314.png" class="sapUiMediumMarginEnd sapUiSmallMarginBottom" displaySize="L"/>
+				<m:Avatar src="{cv>/header/Photo}" class="sapUiMediumMarginEnd sapUiSmallMarginBottom" displaySize="L"/>
 
 				<m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
 					<m:Title class="sapUiTinyMarginBottom">
@@ -75,17 +70,17 @@
 
 					<m:HBox class="sapUiTinyMarginBottom">
 						<core:Icon src="sap-icon://account"/>
-						<m:Link text="Test **{cv>/Consultant/0/Info}** John Miller" class="sapUiSmallMarginBegin"/>
+						<m:Link text="{cv>/header/FirstName} {cv>/header/LastName}" class="sapUiSmallMarginBegin"/>
 					</m:HBox>
 
 					<m:HBox class="sapUiTinyMarginBottom">
 						<core:Icon src="sap-icon://outgoing-call"/>
-						<m:Link text=" +1 234 5678" class="sapUiSmallMarginBegin"/>
+						<m:Link text="{cv>/header/Tel}" class="sapUiSmallMarginBegin"/>
 					</m:HBox>
 
 					<m:HBox>
 						<core:Icon src="sap-icon://email"/>
-						<m:Link text="john.miller@company.com" class="sapUiSmallMarginBegin"/>
+						<m:Link text="{cv>/header/Mail}" class="sapUiSmallMarginBegin"/>
 					</m:HBox>
 				</m:VBox>
 

@@ -10,16 +10,28 @@ sap.ui.define([
 
         updateModel: function (oModel, oView) {
             var sSheetsUrl = "1BaRM37lx5vx-TC9xvF20MWCoCdLkKgj9uU36WoAzdsk";
+            var that = this;
 
             this.parseSheets(sSheetsUrl, function (data) {
-                //var oModel = new sap.ui.model.json.JSONModel();
-                //var oModel = oView.getModel("cvMod");
+                data.busy = true;
+                if (data.Consultant) {
+                    data.header = that._convertConsultant(data.Consultant);
+                    data.Consultant = "";
+                }
+                if (data.Activity && data.header && data.Synthesis) {
+                    data.busy = false;
+                }
                 oModel.setData(data);
-                //that.setModel(oModel, "cvMod");
-                //oView.setModel(oModel);
-                //sap.ui.getCore().byId("Shell").setBusy(false);
-                //sap.ui.getCore().getEventBus().publish("ninja.openui5.cart", "modelRefreshed", {});
             });
+        },
+
+        _convertConsultant: function (oConsult) {
+            var retHeader = {};
+            for (let index = 0; index < oConsult.length; index++) {
+                const element = oConsult[index];
+                retHeader[element.Key] = element.Info;
+            }
+            return retHeader;
         },
 
         parseSheet: function (sKey, mSheetMeta, callback) {
