@@ -4,7 +4,9 @@ var path = require('path'),
 var app = express();
 
 // Display on good directory
-app.use('/', express.static(path.join(__dirname, 'webapp')));
+app.use('/ui5', express.static(path.join(__dirname, 'webapp')));
+app.use('/wt', express.static(path.join(__dirname, 'walkthrough')));
+app.use('/cv', express.static(path.join(__dirname, 'webapp')));
 
 // For other key words, go on first page
 app.get('/', function (req, res) {
@@ -16,7 +18,7 @@ app.get('/', function (req, res) {
 });
 
 // Listen to port
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 0;
 app.listen(port, function () {
 	console.log("Listen on port " + port);
 	console.log("http://localhost:" + port + "/cv");
