@@ -1,9 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"com/cv/cv/model/models",
-	"com/cv/cv/gs/gSheet"
-], function (UIComponent, Device, models, gs) {
+	"com/cv/cv/model/models"
+], function (UIComponent, Device, models) {
 	"use strict";
 
 	return UIComponent.extend("com.cv.cv.Component", {
@@ -28,12 +27,6 @@ sap.ui.define([
 			this.setModel(models.createDeviceModel(), "device");
 			this.setModel(models.createViewModel(), "cvMod");
 
-			// create root view // CHRIS
-			var oModel = this.getModel("cvMod");
-
-			//oView.setModel(oI18nModel, "i18n");
-			gs.updateModel(oModel); // CHRIS end
-			//this.setModel(oModel, "cvMod");
 		}
 	});
 });

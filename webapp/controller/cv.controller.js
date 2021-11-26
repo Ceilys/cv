@@ -1,10 +1,11 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
+	"sap/ui/core/mvc/Controller",
+	"com/cv/cv/gs/gSheet"
 ],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-	function (Controller) {
+	function (Controller,gs) {
 		"use strict";
 
 		return Controller.extend("com.cv.cv.controller.CV", {
@@ -15,11 +16,12 @@ sap.ui.define([
 
 				// convert tab global information
 				var oData = oCvModel.getData();
-				//oData.header = this._convertConsultant(oData.Consultant);
+				oData.cv = gs.getGS();   // Get Google sheet information
 				oCvModel.setData(oData);
 
 				// set information in the view
 				this.getView().setModel(oCvModel, "cv");
-			},
+
+			}
 		});
 	});

@@ -4,113 +4,80 @@ sap.ui.define([
 
     return {
 
-        parseIndex: function (sPath) {
-            return sPath.match(/\d+/)[0];
-        },
+        getGS: function () {
+			// Build Object list
+            var objCv = { lastName : "", firstName : "", email : "", tel : "", add : "", life : "", skills : [], hist : [], train : [] };
 
-        updateModel: function (oModel, oView) {
-            var sSheetsUrl = "1BaRM37lx5vx-TC9xvF20MWCoCdLkKgj9uU36WoAzdsk";
-            var that = this;
+			// XMLHttpRequest
+			var urlIdent = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCVKJQhLDUBeZL3Rl6Y-V5eyloLleJNUVz4dRTvsJ47jXl8CyRW5DhCxNuv0oxfQxZ5vY0t3TKa-Zz/pub?gid=0&single=true&output=csv";
+            var urlHist = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCVKJQhLDUBeZL3Rl6Y-V5eyloLleJNUVz4dRTvsJ47jXl8CyRW5DhCxNuv0oxfQxZ5vY0t3TKa-Zz/pub?gid=672234878&single=true&output=csv"
+			var urlTrain = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCVKJQhLDUBeZL3Rl6Y-V5eyloLleJNUVz4dRTvsJ47jXl8CyRW5DhCxNuv0oxfQxZ5vY0t3TKa-Zz/pub?gid=600468264&single=true&output=csv"
+            var urlSkill = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCVKJQhLDUBeZL3Rl6Y-V5eyloLleJNUVz4dRTvsJ47jXl8CyRW5DhCxNuv0oxfQxZ5vY0t3TKa-Zz/pub?gid=1521485011&single=true&output=csv"
 
-            this.parseSheets(sSheetsUrl, function (data) {
-                data.busy = true;
-                if (data.Consultant) {
-                    data.header = that._convertConsultant(data.Consultant);
-                    data.Consultant = "";
-                }
-                if (data.Activity && data.header && data.Synthesis) {
-                    data.busy = false;
-                }
-                oModel.setData(data);
-            });
-        },
+            // Get identity
+            var xmlHttp = null;
+			xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( "GET", urlIdent, false );
+			xmlHttp.send( null );
+			var Treturn = xmlHttp.responseText.split('\r\n');
+            objCv.lastName = Treturn[0].split(',')[1];
+            objCv.firstName = Treturn[1].split(',')[1];
+            objCv.email = Treturn[2].split(',')[1]; 
+            objCv.tel = Treturn[3].split(',')[1];  
+            objCv.add = Treturn[4].split(',')[1]; 
+            objCv.life = Treturn[5].split(',')[1].split(';');
 
-        _convertConsultant: function (oConsult) {
-            var retHeader = {};
-            for (let index = 0; index < oConsult.length; index++) {
-                const element = oConsult[index];
-                retHeader[element.Key] = element.Info;
+            // Get skills
+            objCv.skills = [];           
+			xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( "GET", urlSkill, false );
+			xmlHttp.send( null );
+			Treturn = xmlHttp.responseText.split('\r\n');
+            for (let index = 0, oline = { cat : "", typ : "" ,kw : "" }; index < Treturn.length; index++) {
+                const eline = Treturn[index].split(',');
+                oline.cat = eline[0];
+                oline.typ = eline[1];
+                oline.kw = eline[2];
+                objCv.skills.push($.extend({},oline));
             }
-            return retHeader;
-        },
 
-        parseSheet: function (sKey, mSheetMeta, callback) {
-            if (typeof (mSheetMeta) == "function") {
-                callback = mSheetMeta;
-                mSheetMeta = undefined;
+            // Get Historical
+            objCv.hist = [];           
+			xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( "GET", urlHist, false );
+			xmlHttp.send( null );
+			Treturn = xmlHttp.responseText.split('EOL\r\n');
+            for (let index = 1, oline = { dtDeb : "", dtEnd : "" ,company : "", Logo : "", Lang : "", Role : "", Detail : "", KW : "", duration : "" }; index < Treturn.length; index++) {
+                const eline = Treturn[index].split(',');
+                oline.dtDeb = eline[0];
+                oline.dtEnd = eline[1];
+                oline.company = eline[2];
+                oline.Logo = eline[3];
+                oline.Lang = eline[4];
+                oline.Role = eline[5];
+                oline.Detail = eline[6].split('\n');
+                oline.KW = eline[7].split(';');
+                oline.duration = eline[8];
+                objCv.hist.push($.extend({},oline));
             }
 
-            var sUrl = "https://spreadsheets.google.com/feeds/cells/"
-                + sKey
-                + "/"
-                + (!mSheetMeta ? 1 : mSheetMeta['index'])
-                + "/public/values?alt=json";
+            
+            // Get Training
+            objCv.train = [];           
+			xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( "GET", urlTrain, false );
+			xmlHttp.send( null );
+			Treturn = xmlHttp.responseText.split('\r\n');
+            for (let index = 0, oline = { year : "", training : "" }; index < Treturn.length; index++) {
+                const eline = Treturn[index].split(',');
+                oline.year = eline[0];
+                oline.training = eline[1];
+                objCv.train.push($.extend({},oline));
+            }
 
-            $.getJSON(sUrl, function (data) {
-                var aHeaders = [];
-                var mEntry = {};
-                var mEntries = {};
-                var aEntries = [];
-
-                var sTitle = !mSheetMeta ? data.feed.title.$t : mSheetMeta['title'];
-                var aEntriesFeed = data.feed.entry;
-                var iNumOfCol = aEntriesFeed[aEntriesFeed.length - 1].gs$cell.col;
-
-                // extract headers from the feed into array (first row)
-                for (var i = 0, aHeaderFeed = {}; i < iNumOfCol; i++) {
-                    aHeaderFeed = aEntriesFeed.shift().gs$cell.$t;
-                    aHeaders[i] = aHeaderFeed;
-                }
-
-                // extract the entries from the feed
-                while (aEntriesFeed.length > 0) {
-                    for (var i = 0; i < iNumOfCol; i++) {
-                        try {
-                            var mEntryFeed = aEntriesFeed.shift().gs$cell;
-                        }
-                        catch(err){
-                            break;
-                        }
-                        mEntry[aHeaders[i]] = mEntryFeed.$t;
-                    }
-                    aEntries.push(mEntry);
-                    mEntry = {};
-                }
-
-                mEntries[sTitle] = aEntries;
-                callback(mEntries);
-            })
-        },
-
-        parseSheets: function (sKey, callback) {
-            var sUrl = "https://spreadsheets.google.com/feeds/worksheets/"
-                + sKey
-                + "/public/full?alt=json";
-
-            var aSheetsMeta = [];
-            var mModel = {};
-            var that = this;
-
-            $.getJSON(sUrl, function (data) {
-                // extract sheets meta data (index and title) into array
-                var mSheetMeta = {};
-
-                $.each(data.feed.entry, function (index, mEntry) {
-                    mSheetMeta['index'] = index + 1;
-                    mSheetMeta['title'] = mEntry.title.$t;
-                    aSheetsMeta.push(mSheetMeta);
-                    mSheetMeta = {};
-                });
-            }).done(function () {
-                while (aSheetsMeta.length > 0) {
-                    var mSheetMeta = aSheetsMeta.shift();
-                    that.parseSheet(sKey, mSheetMeta, function (data) {
-                        $.extend(mModel, data);
-                        callback(mModel);
-                    });
-                }
-            });
+            return objCv;
         }
+
     }
 
 });
