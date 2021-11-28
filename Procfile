@@ -1,1 +1,1 @@
-web: node local.js
+web: node local2.js

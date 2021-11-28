@@ -1,16 +1,23 @@
-var http = require('http');
-var fs = require('fs');
-
 // User Heroku port or local port
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
+console.log("OK, port : ", PORT);
 
-fs.readFile('./webapp/index.html', function (err, html) {
+let http = require('http');
+let fs = require('fs');
 
-    if (err) throw err;    
+let handleRequest = (request, response) => {
+    response.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+    fs.readFile('./webapp/index.html', null, function (error, data) {
+        if (error) {
+            response.writeHead(404);
+            respone.write('Whoops! File not found!');
+        } else {
+            response.write(data);
+        }
+        response.end();
+    });
+};
 
-    http.createServer(function(request, response) {  
-        response.writeHeader(200, {"Content-Type": "text/html"});  
-        response.write(html);  
-        response.end();  
-    }).listen(PORT);
-});
+http.createServer(handleRequest).listen(PORT);
