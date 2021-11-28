@@ -86,8 +86,8 @@
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "CV",
-          "viewName": "CV"
+          "viewId": "cv",
+          "viewName": "cv"
         }
       }
     }
