@@ -32,10 +32,10 @@
   "sap.ui5": {
     "flexEnabled": false,
     "rootView": {
-      "viewName": "com.cv.cv.view.CV",
+      "viewName": "com.cv.cv.view.cv",
       "type": "XML",
       "async": true,
-      "id": "CV"
+      "id": "cv"
     },
     "dependencies": {
       "minUI5Version": "1.66.0",
