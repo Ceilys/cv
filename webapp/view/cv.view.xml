@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="com.cv.cv.controller.CV"
+    controllerName="com.cv.cv.controller.cv"
     xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.uxap"
 	xmlns:m="sap.m"
