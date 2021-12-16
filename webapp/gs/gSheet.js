@@ -6,7 +6,8 @@ sap.ui.define([
 
         getGS: function () {
 			// Build Object list
-            var objCv = { lastName : "", firstName : "", email : "", tel : "", add : "", life : "", skills : [], hist : [], train : [] };
+            var objCv = { lastName : "", firstName : "", email : "", tel : "", add : "", life : "", photo : "", 
+                           resume : "", histo : "", form : "", comp : "", skills : [], hist : [], train : [] };
 
 			// XMLHttpRequest
 			var urlIdent = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCVKJQhLDUBeZL3Rl6Y-V5eyloLleJNUVz4dRTvsJ47jXl8CyRW5DhCxNuv0oxfQxZ5vY0t3TKa-Zz/pub?gid=0&single=true&output=csv";
@@ -26,6 +27,12 @@ sap.ui.define([
             objCv.tel = Treturn[3].split(',')[1];  
             objCv.add = Treturn[4].split(',')[1]; 
             objCv.life = Treturn[5].split(',')[1].split(';');
+            objCv.photo = Treturn[6].split(',')[1]; 
+            objCv.title = Treturn[7].split(',')[1]; 
+            objCv.resume = Treturn[8].split(',')[1]; 
+            objCv.histo = Treturn[9].split(',')[1]; 
+            objCv.form = Treturn[10].split(',')[1]; 
+            objCv.comp = Treturn[11].split(',')[1]; 
 
             // Get skills
             objCv.skills = [];           

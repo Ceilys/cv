@@ -1,149 +1,147 @@
-<mvc:View controllerName="com.cv.cv.controller.cv"
-	xmlns:mvc="sap.ui.core.mvc"
+<mvc:View
+	controllerName="com.cv.cv.controller.cv"
 	xmlns="sap.uxap"
+	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:layout="sap.ui.layout"
 	xmlns:m="sap.m"
-	height="100%">
-	<ObjectPageLayout id="ObjectPageLayout"
+	height="42em"
+>
+	<ObjectPageLayout
+		id="ObjectPageLayout"
 		showTitleInHeaderContent="true"
-		showEditHeaderButton="true"
-		editHeaderButtonPress="handleEditBtnPress"
-		upperCaseAnchorBar="false">
+		upperCaseAnchorBar="false"
+	>
 		<headerTitle>
-			<ObjectPageDynamicHeaderTitle>
-				<breadcrumbs>
-					<m:Breadcrumbs id="breadcrumbsId" currentLocationText="Object Page Example" >
-						<m:Link text="Page 1 a very long link" press="handleLink1Press"/>
-						<m:Link text="Page 2 long link" press="handleLink2Press"/>
-					</m:Breadcrumbs>
-				</breadcrumbs>
-
-				<expandedHeading>
-					<m:HBox>
-						<m:Title text="{cv>/header/Title}" wrapping="true"/>
-						<m:ObjectMarker type="Favorite" class="sapUiTinyMarginBegin"/>
-					</m:HBox>
-				</expandedHeading>
-
-				<snappedHeading>
-					<m:FlexBox  fitContainer="true" alignItems="Center">
-						<m:Avatar src="{cv>/header/Photo}" class="sapUiTinyMarginEnd"/>
-						<m:Title text="{cv>/cv/firstName} {cv>/cv/lastName}" wrapping="true"/>
-					</m:FlexBox>
-				</snappedHeading>
-
-				<expandedContent>
-					<m:Text text="{cv>/header/Title}"/>
-				</expandedContent>
-
-				<snappedContent>
-					<m:Text text="Senior UI Developer"/>
-				</snappedContent>
-
-				<snappedTitleOnMobile>
-					<m:Title text="Senior UI Developer"/>
-				</snappedTitleOnMobile>
-
+			<ObjectPageHeader
+				id="headerForTest"
+				headerDesign="Light"
+				objectTitle="{cv>/cv/firstName} {cv>/cv/lastName}"
+				showTitleSelector="false"
+				showMarkers="true"
+				markFavorite="true"
+				markFlagged="true"
+				markChanges="false"
+				objectSubtitle="{cv>/cv/title}"
+				objectImageURI="{cv>/cv/photo}"
+				objectImageShape="Circle"
+				isObjectIconAlwaysVisible="false"
+				isObjectTitleAlwaysVisible="false"
+				isObjectSubtitleAlwaysVisible="false"
+				isActionAreaAlwaysVisible="true"
+				showPlaceholder="true"
+			>
 				<actions>
-					<m:OverflowToolbarButton icon="sap-icon://edit" text="edit header" type="Emphasized" tooltip="edit">
-						<m:layoutData>
-							<m:OverflowToolbarLayoutData priority="NeverOverflow"/>
-						</m:layoutData>
-					</m:OverflowToolbarButton>
-					<m:OverflowToolbarButton icon="sap-icon://pull-down" text="show section" type="Emphasized" tooltip="pull-down"/>
-					<m:OverflowToolbarButton icon="sap-icon://show" text="show state" tooltip="show"/>
-					<m:Button text="Toggle Footer" press="toggleFooter"/>
+					<ObjectPageHeaderActionButton
+						text="Public Profile"
+						iconFirst="true"
+						icon="sap-icon://edit"
+						press="handlePress"
+						tooltip="edit"
+					/>
+					<ObjectPageHeaderActionButton
+						text="Take Action"
+						iconFirst="true"
+						icon="sap-icon://action"
+						tooltip="action"
+					/>
 				</actions>
-			</ObjectPageDynamicHeaderTitle>
+			</ObjectPageHeader>
 		</headerTitle>
-
 		<headerContent>
-			<m:FlexBox wrap="Wrap">
-				<m:Avatar class="sapUiSmallMarginEnd" src="./test-resources/sap/uxap/images/imageID_275314.png"  displaySize="L" />
-
-					<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-						<m:Link text="+33 6 4512 5158"/>
-						<m:Link text="DeniseSmith@sap.com"/>
-					</layout:VerticalLayout>
-
-					<layout:HorizontalLayout class="sapUiSmallMarginBeginEnd">
-						<m:Image src="./test-resources/sap/uxap/images/linkedin.png"/>
-						<m:Image src="./test-resources/sap/uxap/images/Twitter.png" class="sapUiSmallMarginBegin"/>
-					</layout:HorizontalLayout>
-
-				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-					<m:Label text="Hello! I am Denise and I use UxAP"/>
-					<m:VBox>
-						<m:Label text="Achieved goals"/>
-						<m:ProgressIndicator percentValue="30" displayValue="30%"/>
-					</m:VBox>
-				</layout:VerticalLayout>
-
-				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-					<m:Label text="San Jose, USA"/>
-				</layout:VerticalLayout>
-			</m:FlexBox>
+			<layout:VerticalLayout>
+				<m:Label text="{cv>/cv/tel}"/>
+				<m:Link text="{cv>/cv/mail}"/>
+				<layout:HorizontalLayout>
+					<m:Image
+						height="24px"
+						width="24px"
+						src="./test-resources/sap/uxap/images/linkedInIcon.png"
+					/>
+				</layout:HorizontalLayout>
+			</layout:VerticalLayout>
+			<m:Text
+				width="200px"
+				text="{cv>/cv/resume}"
+			/>
+			<layout:VerticalLayout>
+				<m:Label text="Profile completion"/>
+				<m:ProgressIndicator
+					percentValue="30"
+					displayValue="30%"
+					showValue="true"
+					state="None"
+				/>
+				<m:HBox>
+					<m:Text
+						text="Abap"
+						class="sapUiSmallMarginBottom"
+					/>
+					<m:RatingIndicator
+						class="sapUiSmallMarginBottom"
+						value="4"
+						tooltip="Rating Tooltip"
+					/>
+				</m:HBox>
+				<m:HBox>
+					<m:Text
+						text="Production"
+						class="sapUiSmallMarginBottom"
+					/>
+					<m:RatingIndicator
+						class="sapUiSmallMarginBottom"
+						value="4"
+						tooltip="Rating Tooltip"
+					/>
+				</m:HBox>
+			</layout:VerticalLayout>
 		</headerContent>
-
 		<sections>
-			<ObjectPageSection titleUppercase="false" id="goalsSection" title="2014 Goals Plan">
+			<ObjectPageSection title="{cv>/cv/histo}">
 				<subSections>
-					<ObjectPageSubSection id="goalsSectionSS1">
+					<ObjectPageSubSection>
 						<blocks>
-							<m:Label text="Essai"/>
+							<m:List items="{cv>/cv/hist}">
+								<m:FeedListItem
+									sender="{cv>company}"
+									icon="{cv>Logo}"
+									iconDensityAware="false"
+									info="{cv>Role}"
+									timestamp="{cv>dtDeb}"
+									text="{cv>Detail}"
+								/>
+							</m:List>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
-
-			<ObjectPageSection titleUppercase="false" id="personalSection" title="Personal" importance="Medium">
+			<ObjectPageSection title="{cv>/cv/form}">
 				<subSections>
-					<ObjectPageSubSection id="personalSectionSS1" title="Connect" titleUppercase="false">
+					<ObjectPageSubSection>
 						<blocks>
-													<m:Label text="Essai 2"/>
+							<m:List items="{cv>/cv/train}">
+								<m:StandardListItem
+									title="{cv>training}"
+									info="{cv>year}"
+								/>
+							</m:List>
 						</blocks>
-					</ObjectPageSubSection>
-
-					<ObjectPageSubSection id="personalSectionSS2" title="Payment information" titleUppercase="false">
-						<blocks>
-						 							<m:Label text="Essai 3"/>
-						</blocks>
-						<moreBlocks>
-						</moreBlocks>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
-
-			<ObjectPageSection titleUppercase="false" id="employmentSection" title="Employment">
+			<ObjectPageSection title="{cv>/cv/comp}">
 				<subSections>
-					<ObjectPageSubSection id="employmentSectionSS1" title="Job information" titleUppercase="false">
+					<ObjectPageSubSection>
 						<blocks>
-													<m:Label text="Essai 4"/>
-						</blocks>
-					</ObjectPageSubSection>
-
-					<ObjectPageSubSection id="employmentSectionSS2" title="Employee Details" importance="Medium" titleUppercase="false">
-						<blocks>
-						 									<m:Label text="Essai 5"/>
-						</blocks>
-						<moreBlocks>
-						</moreBlocks>
-					</ObjectPageSubSection>
-
-					<ObjectPageSubSection id="employmentSectionSS3" title="Job Relationship" importance="Low" titleUppercase="false">
-						<blocks>
-													<m:Label text="Essai 6"/>
+							<m:List items="{cv>/cv/skills}">
+								<m:StandardListItem
+									title="{cv>typ}"
+									info="{cv>cat}"
+								/>
+							</m:List>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
 		</sections>
-		<footer>
-			<m:OverflowToolbar>
-				<m:ToolbarSpacer />
-				<m:Button type="Accept" text="Accept"/>
-				<m:Button type="Reject" text="Reject"/>
-			</m:OverflowToolbar>
-		</footer>
 	</ObjectPageLayout>
 </mvc:View>
