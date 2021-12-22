@@ -7,7 +7,7 @@ sap.ui.define([
         getGS: function () {
 			// Build Object list
             var objCv = { lastName : "", firstName : "", email : "", tel : "", add : "", life : "", photo : "", 
-                           resume : "", histo : "", form : "", comp : "", skills : [], hist : [], train : [] };
+                           resume : "", histo : "", form : "", comp : "", skTotT : "", skTotF : "",skills : [], hist : [], train : [] };
 
 			// XMLHttpRequest
 			var urlIdent = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCVKJQhLDUBeZL3Rl6Y-V5eyloLleJNUVz4dRTvsJ47jXl8CyRW5DhCxNuv0oxfQxZ5vY0t3TKa-Zz/pub?gid=0&single=true&output=csv";
@@ -45,7 +45,10 @@ sap.ui.define([
                 oline.cat = eline[0];
                 oline.typ = eline[1];
                 oline.kw = eline[2];
+                oline.perc = parseFloat(eline[3]);
                 objCv.skills.push($.extend({},oline));
+                if (oline.cat === 'Technique')  objCv.skTotT++;
+                if (oline.cat === 'Fonctionnel')  objCv.skTotF++;
             }
 
             // Get Historical
@@ -63,6 +66,8 @@ sap.ui.define([
                 oline.Lang = eline[4];
                 oline.Role = eline[5];
                 oline.Detail = eline[6].split('\n');
+                oline.Detail = oline.Detail.toString().replaceAll('"','');
+                oline.Detail = "\n" + oline.Detail.toString().replaceAll(',','\n');
                 oline.KW = eline[7].split(';');
                 oline.duration = eline[8];
                 objCv.hist.push($.extend({},oline));

@@ -2,6 +2,7 @@
 	controllerName="com.cv.cv.controller.cv"
 	xmlns="sap.uxap"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:inter="sap.suite.ui.microchart"
 	xmlns:layout="sap.ui.layout"
 	xmlns:m="sap.m"
 	height="42em"
@@ -64,35 +65,37 @@
 				text="{cv>/cv/resume}"
 			/>
 			<layout:VerticalLayout>
-				<m:Label text="Profile completion"/>
-				<m:ProgressIndicator
-					percentValue="30"
-					displayValue="30%"
-					showValue="true"
-					state="None"
-				/>
-				<m:HBox>
-					<m:Text
-						text="Abap"
-						class="sapUiSmallMarginBottom"
-					/>
-					<m:RatingIndicator
-						class="sapUiSmallMarginBottom"
-						value="4"
-						tooltip="Rating Tooltip"
-					/>
-				</m:HBox>
-				<m:HBox>
-					<m:Text
-						text="Production"
-						class="sapUiSmallMarginBottom"
-					/>
-					<m:RatingIndicator
-						class="sapUiSmallMarginBottom"
-						value="4"
-						tooltip="Rating Tooltip"
-					/>
-				</m:HBox>
+				<m:Label text="Technique"/>
+				<m:SegmentedButton 
+					class="sapUiSmallMarginBottom"
+					items="{
+					path: 'cv>/cv/skills',
+					filters: [{
+						path: 'cat',
+						operator: 'EQ',
+						value1: 'Technique'
+					}]
+				}">
+					<m:items>
+						<m:SegmentedButtonItem text="{cv>typ}" tooltip="{cv>typ}" width="8em"/>
+					</m:items>
+				</m:SegmentedButton>
+				<m:Label text="Fonctionnel"/>
+				<m:SegmentedButton 
+					selectedKey=""
+					class="sapUiSmallMarginBottom"
+					items="{
+					path: 'cv>/cv/skills',
+					filters: [{
+						path: 'cat',
+						operator: 'EQ',
+						value1: 'Fonctionnel'
+					}]
+				}">
+					<m:items>
+						<m:SegmentedButtonItem text="{cv>typ}" tooltip="{cv>typ}" width="8em"/>
+					</m:items>
+				</m:SegmentedButton>
 			</layout:VerticalLayout>
 		</headerContent>
 		<sections>
@@ -114,6 +117,80 @@
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
+			<ObjectPageSection title="{cv>/cv/comp}">
+				<subSections>
+					<ObjectPageSubSection title="Techniques">
+						<blocks>
+							<!--m:List items="{cv>/cv/skills}">
+								<m:StandardListItem
+									title="{cv>typ}"
+									info="{cv>cat}"
+								/>
+							</m:List-->
+							<m:FlexBox
+								width="22rem"
+								height="13rem"
+								justifyContent="SpaceBetween"
+							>
+								<m:items>
+									<inter:InteractiveDonutChart
+										selectionEnabled="false"
+										displayedSegments="{cv>/cv/skTotT}"
+										segments="{
+											path: 'cv>/cv/skills',
+											filters: [{
+												path: 'cat',
+												operator: 'EQ',
+												value1: 'Technique'
+											}]
+										}"
+									>
+										<inter:segments>
+											<inter:InteractiveDonutChartSegment
+												label="{cv>typ}"
+												value="{cv>perc}"
+												displayedValue="{cv>perc}%"
+											/>
+										</inter:segments>
+									</inter:InteractiveDonutChart>
+								</m:items>
+							</m:FlexBox>
+						</blocks>
+					</ObjectPageSubSection>
+					<ObjectPageSubSection title="Fonctionnelles">
+						<blocks>
+							<m:FlexBox
+								width="20rem"
+								height="10rem"
+								justifyContent="SpaceBetween"
+							>
+								<m:items>
+									<inter:InteractiveDonutChart
+										selectionEnabled="false"
+										displayedSegments="{cv>/cv/skTotF}"
+										segments="{
+											path: 'cv>/cv/skills',
+											filters: [{
+												path: 'cat',
+												operator: 'EQ',
+												value1: 'Fonctionnel'
+											}]
+										}"
+									>
+										<inter:segments>
+											<inter:InteractiveDonutChartSegment
+												label="{cv>typ}"
+												value="{cv>perc}"
+												displayedValue="{cv>perc}%"
+											/>
+										</inter:segments>
+									</inter:InteractiveDonutChart>
+								</m:items>
+							</m:FlexBox>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
 			<ObjectPageSection title="{cv>/cv/form}">
 				<subSections>
 					<ObjectPageSubSection>
@@ -122,20 +199,6 @@
 								<m:StandardListItem
 									title="{cv>training}"
 									info="{cv>year}"
-								/>
-							</m:List>
-						</blocks>
-					</ObjectPageSubSection>
-				</subSections>
-			</ObjectPageSection>
-			<ObjectPageSection title="{cv>/cv/comp}">
-				<subSections>
-					<ObjectPageSubSection>
-						<blocks>
-							<m:List items="{cv>/cv/skills}">
-								<m:StandardListItem
-									title="{cv>typ}"
-									info="{cv>cat}"
 								/>
 							</m:List>
 						</blocks>
