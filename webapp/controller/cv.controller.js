@@ -17,7 +17,18 @@ sap.ui.define([
 				// convert tab global information
 				var oData = oCvModel.getData();
 				var userLang = navigator.language || navigator.userLanguage; 
-				oData.cv = gs.getGS(userLang);   // Get Google sheet information
+				
+				// Set switch language
+				if (userLang.indexOf('fr') >= 0) {
+					oData.sw1 = 'fr';
+					oData.sw2 = 'en';
+				} else {
+					oData.sw1 = 'en';
+					oData.sw2 = 'fr';					
+				}
+
+				// Get Google sheet information
+				oData.cv = gs.getGS(userLang);   
 				oCvModel.setData(oData);
 
 				// set information in the view
@@ -110,6 +121,25 @@ sap.ui.define([
 					}
 				}
 				oCvModel.setData(oData);
+			},
+
+		onChangeLanguage: function(oEvent) {
+			// We're looking on history if we found the keywords
+			var oCvModel = this.getOwnerComponent().getModel("cvMod");
+			var oData = oCvModel.getData();		
+			var swLang = "";	
+
+			// Get switch information
+			if (oEvent.getSource().getState()) {
+				swLang = oEvent.getSource().getCustomTextOn();
+			} else {
+				swLang = oEvent.getSource().getCustomTextOff();
 			}
+
+			// Get Google sheet information
+			oData.cv = {};
+			oData.cv = gs.getGS(swLang);   
+			oCvModel.setData(oData);
+		}
 		});
 	});

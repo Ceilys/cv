@@ -2,6 +2,7 @@
 	controllerName="com.cv.cv.controller.cv"
 	xmlns="sap.uxap"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
 	xmlns:inter="sap.suite.ui.microchart"
 	xmlns:layout="sap.ui.layout"
 	xmlns:m="sap.m"
@@ -20,8 +21,6 @@
 				showTitleSelector="false"
 				showMarkers="true"
 				markFavorite="true"
-				markFlagged="true"
-				markChanges="false"
 				objectSubtitle="{cv>/cv/title}"
 				objectImageURI="{cv>/cv/photo}"
 				objectImageShape="Circle"
@@ -50,21 +49,27 @@
 		</headerTitle>
 		<headerContent>
 			<layout:VerticalLayout>
-				<m:Label text="{cv>/cv/tel}"/>
-				<m:Link text="{cv>/cv/mail}"/>
 				<layout:HorizontalLayout>
-					<m:Image
-						height="24px"
-						width="24px"
-						src="./test-resources/sap/uxap/images/linkedInIcon.png"
+					<core:Icon src="sap-icon://call" width="0.5em" />
+					<m:Text text="{cv>/cv/tel}"/>
+				</layout:HorizontalLayout>
+				<layout:HorizontalLayout>
+					<core:Icon src="sap-icon://email" width="0.5em"/>
+					<m:Link
+						text="{cv>/cv/email}"
+						href="mailto:{cv>/cv/email}"
 					/>
+				</layout:HorizontalLayout>
+				<layout:HorizontalLayout>
+					<core:Icon src="sap-icon://building" width="0.5em"/>
+					<m:Text text="{cv>/cv/add}"/>
 				</layout:HorizontalLayout>
 			</layout:VerticalLayout>
 			<m:Text
 				width="200px"
 				text="{cv>/cv/resume}"
 			/>
-			<layout:VerticalLayout>
+			<layout:VerticalLayout class="sapUiSmallMarginBottom">
 				<!--m:Label text="{cv>/cv/kw1}"/-->
 				<layout:HorizontalLayout>
 					<m:Button
@@ -132,6 +137,12 @@
 					</m:SegmentedButton>
 				</layout:HorizontalLayout>
 			</layout:VerticalLayout>
+			<m:Switch
+				state="true"
+				customTextOn="{cv>/sw1}"
+				customTextOff="{cv>/sw2}"
+				change="onChangeLanguage"
+			/>
 		</headerContent>
 		<sections>
 			<ObjectPageSection title="{cv>/cv/histo}">
@@ -230,7 +241,11 @@
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-							<m:List items="{cv>/cv/train}">
+							<m:List
+								items="{cv>/cv/train}"
+								width="40%"
+								class="sapUiSmallMarginBottom"
+							>
 								<m:StandardListItem
 									title="{cv>training}"
 									info="{cv>year}"
