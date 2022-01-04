@@ -39,7 +39,7 @@ sap.ui.define([
             objCv.life = Treturn[6].split(',')[1].split(';');
             objCv.photo = Treturn[5].split(',')[1]; 
             objCv.title = Treturn[7].split(',')[1 + indL]; 
-            objCv.resume = Treturn[8].split(',')[1 + indL]; 
+            objCv.resume = Treturn[8].split(',')[1 + indL].toString().replaceAll('"',''); 
             objCv.histo = Treturn[9].split(',')[1 + indL]; 
             objCv.form = Treturn[10].split(',')[1 + indL]; 
             objCv.comp = Treturn[11].split(',')[1 + indL]; 
