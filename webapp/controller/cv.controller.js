@@ -1,11 +1,12 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"com/cv/cv/gs/gSheet"
+	"com/cv/cv/gs/gSheet",
+	"sap/ui/Device"
 ],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-	function (Controller, gs) {
+	function (Controller, gs, Device) {
 		"use strict";
 
 		return Controller.extend("com.cv.cv.controller.cv", {
@@ -17,6 +18,11 @@ sap.ui.define([
 				// convert tab global information
 				var oData = oCvModel.getData();
 				var userLang = navigator.language || navigator.userLanguage; 
+
+				oData.filterOK = Device.system.phone ? false : true;
+				if (Device.system.phone) {
+					this.byId("li-train").setWidth("100%");
+				}
 				
 				// Set switch language
 				if (userLang.indexOf('fr') >= 0) {

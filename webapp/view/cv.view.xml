@@ -69,7 +69,7 @@
 				width="200px"
 				text="{cv>/cv/resume}"
 			/>
-			<layout:VerticalLayout class="sapUiSmallMarginBottom">
+			<layout:VerticalLayout class="sapUiSmallMarginBottom" visible="{cv>/filterOK}">
 				<!--m:Label text="{cv>/cv/kw1}"/-->
 				<layout:HorizontalLayout>
 					<m:Button
@@ -79,6 +79,7 @@
 						text="Filtrer"
 						iconFirst="false"
 						press="onTechnPress"
+
 					/>
 					<m:SegmentedButton
 						id="sb-tech"
@@ -242,6 +243,7 @@
 					<ObjectPageSubSection>
 						<blocks>
 							<m:List
+								id="li-train"
 								items="{cv>/cv/train}"
 								width="40%"
 								class="sapUiSmallMarginBottom"
