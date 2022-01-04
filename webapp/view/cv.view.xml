@@ -66,36 +66,71 @@
 			/>
 			<layout:VerticalLayout>
 				<m:Label text="Technique"/>
-				<m:SegmentedButton 
-					class="sapUiSmallMarginBottom"
-					items="{
-					path: 'cv>/cv/skills',
-					filters: [{
-						path: 'cat',
-						operator: 'EQ',
-						value1: 'Technique'
-					}]
-				}">
-					<m:items>
-						<m:SegmentedButtonItem text="{cv>typ}" tooltip="{cv>typ}" width="8em"/>
-					</m:items>
-				</m:SegmentedButton>
+				<layout:HorizontalLayout>
+					<m:Button
+						id="bu-tech"
+						icon="sap-icon://filter"
+						class="sapUiSmallMarginBottom"
+						text="Filtrer"
+						iconFirst="false"
+						press="onTechnPress"
+					/>
+					<m:SegmentedButton
+						id="sb-tech"
+						class="sapUiSmallMarginBottom"
+						items="{
+							path: 'cv>/cv/skills',
+							filters: [{
+								path: 'cat',
+								operator: 'EQ',
+								value1: 'Technique'
+							}]
+						}"
+						selectionChange="onTechnPress"
+					>
+						<m:items>
+							<m:SegmentedButtonItem
+								text="{cv>typ}"
+								tooltip="{cv>typ}"
+								key="{cv>kw}"
+								width="8em"
+							/>
+						</m:items>
+					</m:SegmentedButton>
+				</layout:HorizontalLayout>
 				<m:Label text="Fonctionnel"/>
-				<m:SegmentedButton 
-					selectedKey=""
-					class="sapUiSmallMarginBottom"
-					items="{
-					path: 'cv>/cv/skills',
-					filters: [{
-						path: 'cat',
-						operator: 'EQ',
-						value1: 'Fonctionnel'
-					}]
-				}">
-					<m:items>
-						<m:SegmentedButtonItem text="{cv>typ}" tooltip="{cv>typ}" width="8em"/>
-					</m:items>
-				</m:SegmentedButton>
+				<layout:HorizontalLayout>
+					<m:Button
+						id="bu-fct"
+						icon="sap-icon://filter"
+						class="sapUiSmallMarginBottom"
+						text="Filtrer"
+						iconFirst="false"
+						press="onFctPress"
+					/>
+					<m:SegmentedButton
+						id="sb-fct"
+						class="sapUiSmallMarginBottom"
+						items="{
+							path: 'cv>/cv/skills',
+							filters: [{
+								path: 'cat',
+								operator: 'EQ',
+								value1: 'Fonctionnel'
+							}]
+						}"
+						selectionChange="onFctPress"
+					>
+						<m:items>
+							<m:SegmentedButtonItem
+								text="{cv>typ}"
+								key="{cv>kw}"
+								tooltip="{cv>typ}"
+								width="8em"
+							/>
+						</m:items>
+					</m:SegmentedButton>
+				</layout:HorizontalLayout>
 			</layout:VerticalLayout>
 		</headerContent>
 		<sections>
@@ -108,7 +143,7 @@
 									sender="{cv>company}"
 									icon="{cv>Logo}"
 									iconDensityAware="false"
-									info="{cv>Role}"
+									info="{cv>Role} ({cv>duration} mois)"
 									timestamp="{cv>dtDeb}"
 									text="{cv>Detail}"
 								/>

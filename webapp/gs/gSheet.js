@@ -7,7 +7,7 @@ sap.ui.define([
         getGS: function () {
 			// Build Object list
             var objCv = { lastName : "", firstName : "", email : "", tel : "", add : "", life : "", photo : "", 
-                           resume : "", histo : "", form : "", comp : "", skTotT : "", skTotF : "",skills : [], hist : [], train : [] };
+                           resume : "", histo : "", form : "", comp : "", skTotT : "", skTotF : "",skills : [], hist : [], histS : [], train : [] };
 
 			// XMLHttpRequest
 			var urlIdent = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCVKJQhLDUBeZL3Rl6Y-V5eyloLleJNUVz4dRTvsJ47jXl8CyRW5DhCxNuv0oxfQxZ5vY0t3TKa-Zz/pub?gid=0&single=true&output=csv";
@@ -69,9 +69,10 @@ sap.ui.define([
                 oline.Detail = oline.Detail.toString().replaceAll('"','');
                 oline.Detail = "\n" + oline.Detail.toString().replaceAll(',','\n');
                 oline.KW = eline[7].split(';');
-                oline.duration = eline[8];
+                oline.duration = eline[8].toString().replaceAll('"','') + ',' + eline[9].toString().replaceAll('"','');
                 objCv.hist.push($.extend({},oline));
             }
+            objCv.histS = objCv.hist; // Save historical for future filters
 
             
             // Get Training
