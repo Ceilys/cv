@@ -81,7 +81,12 @@ sap.ui.define([
                 oline.Detail = oline.Detail.toString().replaceAll('"','');
                 oline.Detail = "\n" + oline.Detail.toString().replaceAll(',','\n');
                 oline.KW = eline[7].split(';');
-                oline.duration = eline[8].toString().replaceAll('"','') + ',' + eline[9].toString().replaceAll('"','');
+                if (eline[9].toString().replaceAll('"','') !== "") {
+                    oline.duration = eline[8].toString().replaceAll('"','') + ',' + eline[9].toString().replaceAll('"','');
+                } else {
+                    oline.duration = eline[8].toString().replaceAll('"','');
+                }
+                
 
                 if (vLang === oline.Lang) {
                     objCv.hist.push($.extend({},oline));
