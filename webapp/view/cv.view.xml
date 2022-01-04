@@ -31,7 +31,7 @@
 				isActionAreaAlwaysVisible="true"
 				showPlaceholder="true"
 			>
-				<actions>
+				<!--actions TODO - PRINTING VERSION>
 					<ObjectPageHeaderActionButton
 						text="Public Profile"
 						iconFirst="true"
@@ -45,7 +45,7 @@
 						icon="sap-icon://action"
 						tooltip="action"
 					/>
-				</actions>
+				</actions-->
 			</ObjectPageHeader>
 		</headerTitle>
 		<headerContent>
@@ -65,7 +65,7 @@
 				text="{cv>/cv/resume}"
 			/>
 			<layout:VerticalLayout>
-				<m:Label text="Technique"/>
+				<!--m:Label text="{cv>/cv/kw1}"/-->
 				<layout:HorizontalLayout>
 					<m:Button
 						id="bu-tech"
@@ -98,7 +98,7 @@
 						</m:items>
 					</m:SegmentedButton>
 				</layout:HorizontalLayout>
-				<m:Label text="Fonctionnel"/>
+				<!--m:Label text="{cv>/cv/kw2}"/-->
 				<layout:HorizontalLayout>
 					<m:Button
 						id="bu-fct"
@@ -154,7 +154,7 @@
 			</ObjectPageSection>
 			<ObjectPageSection title="{cv>/cv/comp}">
 				<subSections>
-					<ObjectPageSubSection title="Techniques">
+					<ObjectPageSubSection title="{cv>/cv/kw1}">
 						<blocks>
 							<!--m:List items="{cv>/cv/skills}">
 								<m:StandardListItem
@@ -192,7 +192,7 @@
 							</m:FlexBox>
 						</blocks>
 					</ObjectPageSubSection>
-					<ObjectPageSubSection title="Fonctionnelles">
+					<ObjectPageSubSection title="{cv>/cv/kw2}">
 						<blocks>
 							<m:FlexBox
 								width="20rem"

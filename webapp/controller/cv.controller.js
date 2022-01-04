@@ -16,7 +16,8 @@ sap.ui.define([
 
 				// convert tab global information
 				var oData = oCvModel.getData();
-				oData.cv = gs.getGS();   // Get Google sheet information
+				var userLang = navigator.language || navigator.userLanguage; 
+				oData.cv = gs.getGS(userLang);   // Get Google sheet information
 				oCvModel.setData(oData);
 
 				// set information in the view

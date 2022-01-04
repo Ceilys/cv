@@ -4,11 +4,21 @@ sap.ui.define([
 
     return {
 
-        getGS: function () {
+        getGS: function (vLang) {
+            // 0 pour fr / 1 pour en
+            let indL = 0;
+            if (vLang.indexOf('fr') >= 0) {
+                vLang = 'fr';
+            } else {
+                vLang = 'en';
+                indL = 1;
+            }
+
 			// Build Object list
             var objCv = { lastName : "", firstName : "", email : "", tel : "", add : "", life : "", photo : "", 
-                           resume : "", histo : "", form : "", comp : "", skTotT : "", skTotF : "",skills : [], hist : [], histS : [], train : [] };
-
+                           resume : "", histo : "", form : "", comp : "", kw1 : "", kw2 : "",
+                           skTotT : "", skTotF : "",skills : [], hist : [], histS : [], train : [] };
+    
 			// XMLHttpRequest
 			var urlIdent = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCVKJQhLDUBeZL3Rl6Y-V5eyloLleJNUVz4dRTvsJ47jXl8CyRW5DhCxNuv0oxfQxZ5vY0t3TKa-Zz/pub?gid=0&single=true&output=csv";
             var urlHist = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCVKJQhLDUBeZL3Rl6Y-V5eyloLleJNUVz4dRTvsJ47jXl8CyRW5DhCxNuv0oxfQxZ5vY0t3TKa-Zz/pub?gid=672234878&single=true&output=csv"
@@ -26,13 +36,15 @@ sap.ui.define([
             objCv.email = Treturn[2].split(',')[1]; 
             objCv.tel = Treturn[3].split(',')[1];  
             objCv.add = Treturn[4].split(',')[1]; 
-            objCv.life = Treturn[5].split(',')[1].split(';');
-            objCv.photo = Treturn[6].split(',')[1]; 
-            objCv.title = Treturn[7].split(',')[1]; 
-            objCv.resume = Treturn[8].split(',')[1]; 
-            objCv.histo = Treturn[9].split(',')[1]; 
-            objCv.form = Treturn[10].split(',')[1]; 
-            objCv.comp = Treturn[11].split(',')[1]; 
+            objCv.life = Treturn[6].split(',')[1].split(';');
+            objCv.photo = Treturn[5].split(',')[1]; 
+            objCv.title = Treturn[7].split(',')[1 + indL]; 
+            objCv.resume = Treturn[8].split(',')[1 + indL]; 
+            objCv.histo = Treturn[9].split(',')[1 + indL]; 
+            objCv.form = Treturn[10].split(',')[1 + indL]; 
+            objCv.comp = Treturn[11].split(',')[1 + indL]; 
+            objCv.kw1 = Treturn[12].split(',')[1 + indL]; 
+            objCv.kw2 = Treturn[13].split(',')[1 + indL]; 
 
             // Get skills
             objCv.skills = [];           
@@ -43,9 +55,9 @@ sap.ui.define([
             for (let index = 0, oline = { cat : "", typ : "" ,kw : "" }; index < Treturn.length; index++) {
                 const eline = Treturn[index].split(',');
                 oline.cat = eline[0];
-                oline.typ = eline[1];
-                oline.kw = eline[2];
-                oline.perc = parseFloat(eline[3]);
+                oline.typ = eline[1 + indL];
+                oline.kw = eline[3];
+                oline.perc = parseFloat(eline[4]);
                 objCv.skills.push($.extend({},oline));
                 if (oline.cat === 'Technique')  objCv.skTotT++;
                 if (oline.cat === 'Fonctionnel')  objCv.skTotF++;
@@ -70,7 +82,10 @@ sap.ui.define([
                 oline.Detail = "\n" + oline.Detail.toString().replaceAll(',','\n');
                 oline.KW = eline[7].split(';');
                 oline.duration = eline[8].toString().replaceAll('"','') + ',' + eline[9].toString().replaceAll('"','');
-                objCv.hist.push($.extend({},oline));
+
+                if (vLang === oline.Lang) {
+                    objCv.hist.push($.extend({},oline));
+                }
             }
             objCv.histS = objCv.hist; // Save historical for future filters
 
@@ -84,7 +99,7 @@ sap.ui.define([
             for (let index = 0, oline = { year : "", training : "" }; index < Treturn.length; index++) {
                 const eline = Treturn[index].split(',');
                 oline.year = eline[0];
-                oline.training = eline[1];
+                oline.training = eline[1 + indL];
                 objCv.train.push($.extend({},oline));
             }
 
